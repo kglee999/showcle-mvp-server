@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class LogAspect {
     // .. 하위 모든 패키지(. 점 한개는 직계 하위 클래스) * 모든 클래스 . * 모든 메소드, (..) 모든 파라미터
-    @Around("within(com.nubebe.controller..*)")
+    @Around("within(com.showcle..*)")
     public Object logAspect(ProceedingJoinPoint joinPoint) throws Throwable {
 
         RequestAttributes requestAttribute = RequestContextHolder.getRequestAttributes();

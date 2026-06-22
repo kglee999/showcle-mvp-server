@@ -1,4 +1,4 @@
-package com.showcle.domain.sample.dto;
+package com.showcle.api.sample.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.showcle.global.annotation.ExcelColumn;

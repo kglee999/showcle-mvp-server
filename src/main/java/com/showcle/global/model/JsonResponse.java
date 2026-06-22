@@ -14,5 +14,6 @@ public class JsonResponse<T> {
     public JsonResponse(T data) {
         this.result = true;
         this.message = ServiceResult.SUCCESS.name();
+        this.data = data;
     }
 }

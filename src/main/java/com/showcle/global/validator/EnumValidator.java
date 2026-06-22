@@ -3,7 +3,7 @@ package com.showcle.global.validator;
 import com.showcle.global.annotation.ValidEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Stream;

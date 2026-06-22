@@ -21,7 +21,7 @@ public abstract class CommonController {
         log.error(CommonUtil.printException(e));
     }
 
-    public Map<String, String> validateHandling(Errors errors) {
+    protected Map<String, String> validateHandling(Errors errors) {
         Map<String, String> validatorResult = new HashMap<>();
 
         for (FieldError error : errors.getFieldErrors()) {

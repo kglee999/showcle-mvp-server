@@ -1,8 +1,7 @@
-package com.showcle.global.config;
+package com.showcle.global.exception;
 
 import com.showcle.global.model.JsonResponse;
 import com.showcle.global.enums.ServiceResult;
-import com.showcle.global.exception.CustomValidationException;
 import com.showcle.global.util.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.showcle.domain.sample.mapper;
+package com.showcle.api.sample.mapper;
 
-import com.showcle.domain.sample.dto.Sample;
+import com.showcle.api.sample.dto.Sample;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

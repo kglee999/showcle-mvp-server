@@ -14,7 +14,7 @@
 
     <!-- 타입 alias 등록 (도메인 클래스 경로) -->
     <typeAliases>
-        <package name="com.showcle.domain"/>
+        <package name="com.showcle.api"/>
         <package name="com.showcle.global"/>
         <package name="com.showcle.infra"/>
     </typeAliases>

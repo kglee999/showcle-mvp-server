@@ -1,7 +1,7 @@
-package com.showcle.domain.sample.controller;
+package com.showcle.api.sample.controller;
 
-import com.showcle.domain.sample.dto.Sample;
-import com.showcle.domain.sample.service.SampleService;
+import com.showcle.api.sample.dto.Sample;
+import com.showcle.api.sample.service.SampleService;
 import com.showcle.global.controller.CommonController;
 import com.showcle.global.model.JsonResponse;
 import com.showcle.global.enums.ServiceResult;

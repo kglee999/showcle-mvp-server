@@ -3,23 +3,22 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.showcle.domain.sample.mapper.SampleMapper">
-   <select id="findAll" resultType="com.showcle.domain.sample.dto.Sample">
+<mapper namespace="com.showcle.api.sample.mapper.SampleMapper">
+   <select id="findAll" resultType="com.showcle.api.sample.dto.Sample">
         select * from sample
    </select>
 
-    <insert id="insert" parameterType="com.showcle.domain.sample.dto.Sample">
+    <insert id="insert" parameterType="com.showcle.api.sample.dto.Sample">
         insert into sample (name, bool, date, created_at, updated_at) values (#{name}, #{bool}, now(), now(), now())
     </insert>
 
-    <update id="update" parameterType="com.showcle.domain.sample.dto.Sample">
+    <update id="update" parameterType="com.showcle.api.sample.dto.Sample">
         update sample
            set name = #{name}
              , bool = #{bool}
              , date = #{date}
              , updated_at = now()
          where idx = #{idx}
-         returning *
     </update>
 
     <delete id="deleteAll">

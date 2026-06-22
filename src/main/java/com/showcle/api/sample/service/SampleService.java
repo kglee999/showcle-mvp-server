@@ -1,7 +1,7 @@
-package com.showcle.domain.sample.service;
+package com.showcle.api.sample.service;
 
-import com.showcle.domain.sample.dto.Sample;
-import com.showcle.domain.sample.mapper.SampleMapper;
+import com.showcle.api.sample.dto.Sample;
+import com.showcle.api.sample.mapper.SampleMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
