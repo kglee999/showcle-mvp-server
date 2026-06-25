@@ -3,14 +3,15 @@ package com.showcle.api.auth.service;
 import com.showcle.api.auth.dto.Member;
 import com.showcle.api.auth.dto.MemberAuth;
 import com.showcle.api.auth.mapper.MemberMapper;
-import com.showcle.global.enums.Auth;
+import com.showcle.global.enums.ErrorCode;
+import com.showcle.global.enums.MailType;
+import com.showcle.global.exception.BusinessException;
 import com.showcle.global.service.MailService;
 import com.showcle.global.util.CommonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,35 +32,65 @@ public class MemberService {
 
     // 이메일 인증번호 발송
     @Transactional
-    public boolean sendEmailCode(String email) {
+    public void sendEmailCode(String email) {
         String code = CommonUtil.generateAuthCode();
-
-        // 메일 발송
-        Map<String, String> params = new HashMap<>();
-        params.put("subject", "이메일 인증번호 발송");
-        params.put("code", code);
-        mailService.sendEmail(Auth.MailType.EMAIL_VERIFY, params, email);
 
         // 디비 저장 (인증 만료시간 5분 )
         int result = memberMapper.insertMemberMailAuth(email, code);
-        return result > 0;
+
+        if(result <= 0) {
+            throw new BusinessException(ErrorCode.SERVER_DB_UPDATE_ERROR);
+        }
+
+        // 메일 발송 (디비 저장실패시 메일이 발송되면 안됨)
+        Map<String, String> params = new HashMap<>();
+        params.put("subject", MailType.EMAIL_VERIFY.getSubject());
+        params.put("code", code);
+        mailService.sendEmail(MailType.EMAIL_VERIFY, params, new String[]{ email });
     }
 
-    // 이메일 인증번호 조회
-    @Transactional(readOnly = true)
-    public MemberAuth findLatestMemberMailCode(String email) {
-        return memberMapper.findLatestMemberMailCode(email);
-    }
-
-    // 이메일 인증번호 인증 완료 업데이트
+    // 이메일 인증번호 인증
     @Transactional
-    public boolean updateMemberMailAuth(int idx) {
-        return memberMapper.updateMemberMailAuth(idx) > 0;
+    public void verifyEmail(String email, String code) {
+        MemberAuth auth = memberMapper.findLatestMemberMailCode(email);
+
+        if (auth == null) {
+            throw new BusinessException(ErrorCode.EMAIL_CODE_EXPRIED);
+        }
+        if (!auth.getCode().equals(code)) {
+            throw new BusinessException(ErrorCode.EMAIL_CODE_NOT_MATCH);
+        }
+
+        int result = memberMapper.updateMemberMailAuth(auth.getIdx());
+
+        if(result <= 0) {
+            throw new BusinessException(ErrorCode.SERVER_DB_UPDATE_ERROR);
+        }
     }
 
     // 이메일 인증 완료 여부 확인
     @Transactional(readOnly = true)
     public boolean isEmailVerified(String email) {
         return memberMapper.isEmailVerified(email) > 0;
+    }
+
+    // 회원 정보 저장
+    @Transactional
+    public void saveMember(Member member) {
+        // 이메일 인증 여부 확인
+        boolean isVerified = isEmailVerified(member.getEmail());
+        if(!isVerified) {
+            throw new BusinessException(ErrorCode.EMAIL_NOT_VERIFIED);
+        }
+
+        // 이메일 중복 여부 확인
+        boolean isAvailable = isEmailAvailable(member.getEmail());
+        if(!isAvailable) {
+            throw new BusinessException(ErrorCode.EMAIL_ALREADY_EXISTS);
+        }
+
+        // 프로필 이미지 업로드
+
+        // 회원정보 저장
     }
 }

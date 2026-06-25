@@ -127,7 +127,7 @@ public class ExcelDownloadService {
 			return method.invoke(t);
 
         } catch (Exception e) {
-			log.error(e.getMessage());
+			log.error(CommonUtil.printException(e));
             return "";
         }
     }

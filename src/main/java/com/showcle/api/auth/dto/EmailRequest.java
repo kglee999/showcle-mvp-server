@@ -8,7 +8,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RequestEmail {
+public class EmailRequest {
 
     @NotEmpty
     private String email;

@@ -31,7 +31,7 @@
     <!-- 인증 완료 업데이트 -->
     <update id="updateMemberMailAuth" parameterType="Map">
         update showcle_member_mail_auth
-           set auth_date = now()
+           set auth_dt = now()
          where idx = #{idx}
     </update>
 
@@ -41,44 +41,4 @@
           from showcle_member_mail_auth
          where email = #{email} and auth_dt is not null
     </select>
-
-   <!-- &lt;!&ndash; 메일 인증번호 저장 &ndash;&gt;
-    <insert id="saveEmailAuth" parameterType="com.showcle.api.auth.dto.EmailAuth">
-        insert into email_auth (email, auth_code, created_at, updated_at) values (#{email}, #{authCode}, now(), now())
-    </insert>
-
-    &lt;!&ndash; 메일 인증번호 조회 &ndash;&gt;
-    <select id="findEmailAuth" parameterType="com.showcle.api.auth.dto.EmailAuth" resultType="com.showcle.api.auth.dto.EmailAuth">
-        select * from email_auth where email = #{email}
-    </select>
-
-    &lt;!&ndash; 메일 인증번호 인증 완료 &ndash;&gt;
-    <update id="updateEmailAuth" parameterType="com.showcle.api.auth.dto.EmailAuth">
-        update email_auth
-        set is_auth = true
-          , updated_at = now()
-        where email = #{email}
-    </update>
-
-
-    <select id="findAll" resultType="com.showcle.api.sample.dto.Sample">
-        select * from sample
-    </select>
-
-    <insert id="insert" parameterType="com.showcle.api.sample.dto.Sample">
-        insert into sample (name, bool, date, created_at, updated_at) values (#{name}, #{bool}, now(), now(), now())
-    </insert>
-
-    <update id="update" parameterType="com.showcle.api.sample.dto.Sample">
-        update sample
-        set name = #{name}
-          , bool = #{bool}
-          , date = #{date}
-          , updated_at = now()
-        where idx = #{idx}
-    </update>
-
-    <delete id="deleteAll">
-        delete from sample
-    </delete>-->
 </mapper>
