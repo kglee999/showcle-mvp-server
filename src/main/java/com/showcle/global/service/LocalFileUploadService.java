@@ -27,7 +27,7 @@ public class LocalFileUploadService implements FileUploader {
 
     @Value("${server.file.storage-path}")
     private String storagePath;
-    @Value("${server.file.storage-url}")
+    @Value("${server.file.web-path}")
     private String webPath;
 
     // 실행 파일 및 특정 확장자는 업로드되지 않도록 처리
