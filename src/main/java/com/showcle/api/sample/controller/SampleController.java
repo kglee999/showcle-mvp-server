@@ -6,7 +6,7 @@ import com.showcle.global.controller.CommonController;
 import com.showcle.global.model.JsonResponse;
 import com.showcle.global.enums.ServiceResult;
 import com.showcle.global.exception.CustomValidationException;
-import com.showcle.global.util.ExcelDownloadHelper;
+import com.showcle.global.service.ExcelDownloadService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ public class SampleController extends CommonController {
 
     private final SampleService sampleService;
 
-    private final ExcelDownloadHelper excelHelper;
+    private final ExcelDownloadService excelDownloadService;
 
     @GetMapping("")
     public ResponseEntity<JsonResponse<List<Sample>>> sampleIndex() {
@@ -64,7 +64,7 @@ public class SampleController extends CommonController {
     public void excel(HttpServletResponse response) {
 
         List<Sample> sampleList = sampleService.findAll();
-        excelHelper.export(response, sampleList);
+        excelDownloadService.export(response, sampleList);
     }
 
 }

@@ -3,22 +3,7 @@ package com.showcle.global.enums;
 public enum ServiceResult {
     SUCCESS,
     FAIL,
-    DUPLICATE,
-    DUPLICATE_ID,
-    DUPLICATE_NAME,
-    DUPLICATE_EMAIL,
-    DUPLICATE_PHONE,
-    DUPLICATE_BIRTH,
-    NOT_FOUND,
-    LEAVE,
-    PATTERN_ERROR,
-    NOT_MATCH,
     INVALID_PARAM,
     BAD_REQUEST,
-    UNAUTHORIZED,
-    FORBIDDEN,
-    FILE_ERROR,
-    PASSWORD_NOT_MATCH,
-    ORDER_CNT_LIMIT,
-    SIGNUP_REQUIRED
+    UNAUTHORIZED
 }

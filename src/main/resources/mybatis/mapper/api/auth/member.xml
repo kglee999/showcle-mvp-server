@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.showcle.api.auth.mapper.MemberMapper">
+
+    <!-- 이메일로 회원 조회 -->
+    <select id="findByEmail" parameterType="String" resultType="com.showcle.api.auth.dto.Member">
+        select * from showcle_member
+         where email = #{email} and discarded = 0
+    </select>
+
+    <!-- 인증 메일 발송 이력 저장 -->
+    <insert id="insertMemberMailAuth" parameterType="Map">
+        insert into showcle_member_mail_auth (email, code, send_dt, expired_dt)
+        values (#{email}, #{code}, now(), now() + interval '5 minute')
+    </insert>
+
+    <!-- 인증 메일 발송 최종 이력 조회 - 만료시간 체크해야 됨 -->
+    <select id="findLatestMemberMailCode" parameterType="String" resultType="com.showcle.api.auth.dto.MemberAuth">
+        select idx, code
+          from showcle_member_mail_auth
+         where email = #{email}
+           and expired_dt > now()
+           and auth_dt is null
+         order by send_dt desc
+         limit 1
+    </select>
+
+    <!-- 인증 완료 업데이트 -->
+    <update id="updateMemberMailAuth" parameterType="Map">
+        update showcle_member_mail_auth
+           set auth_date = now()
+         where idx = #{idx}
+    </update>
+
+    <!-- 이메일 인증 완료 여부 확인 -->
+    <select id="isEmailVerified" parameterType="String" resultType="Integer">
+        select count(*)
+          from showcle_member_mail_auth
+         where email = #{email} and auth_dt is not null
+    </select>
+
+   <!-- &lt;!&ndash; 메일 인증번호 저장 &ndash;&gt;
+    <insert id="saveEmailAuth" parameterType="com.showcle.api.auth.dto.EmailAuth">
+        insert into email_auth (email, auth_code, created_at, updated_at) values (#{email}, #{authCode}, now(), now())
+    </insert>
+
+    &lt;!&ndash; 메일 인증번호 조회 &ndash;&gt;
+    <select id="findEmailAuth" parameterType="com.showcle.api.auth.dto.EmailAuth" resultType="com.showcle.api.auth.dto.EmailAuth">
+        select * from email_auth where email = #{email}
+    </select>
+
+    &lt;!&ndash; 메일 인증번호 인증 완료 &ndash;&gt;
+    <update id="updateEmailAuth" parameterType="com.showcle.api.auth.dto.EmailAuth">
+        update email_auth
+        set is_auth = true
+          , updated_at = now()
+        where email = #{email}
+    </update>
+
+
+    <select id="findAll" resultType="com.showcle.api.sample.dto.Sample">
+        select * from sample
+    </select>
+
+    <insert id="insert" parameterType="com.showcle.api.sample.dto.Sample">
+        insert into sample (name, bool, date, created_at, updated_at) values (#{name}, #{bool}, now(), now(), now())
+    </insert>
+
+    <update id="update" parameterType="com.showcle.api.sample.dto.Sample">
+        update sample
+        set name = #{name}
+          , bool = #{bool}
+          , date = #{date}
+          , updated_at = now()
+        where idx = #{idx}
+    </update>
+
+    <delete id="deleteAll">
+        delete from sample
+    </delete>-->
+</mapper>

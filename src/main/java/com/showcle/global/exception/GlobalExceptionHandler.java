@@ -16,6 +16,13 @@ import java.nio.file.AccessDeniedException;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    // BUSINESS EXCEPTION
+    @ExceptionHandler(BusinessException.class)
+    protected ResponseEntity<JsonResponse<Object>> handleBusinessException(BusinessException e) {
+        log.error(e.getMessage());
+        return new ResponseEntity<>(new JsonResponse<>(false, e.getMessage(), e.getText()), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     // spring validation 오류시
     @ExceptionHandler(CustomValidationException.class)
     protected ResponseEntity<JsonResponse<Object>> handleValidationException(CustomValidationException e) {

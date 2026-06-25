@@ -1,9 +1,10 @@
-package com.showcle.global.util;
+package com.showcle.global.service;
 
 import com.showcle.global.annotation.ExcelColumn;
 import com.showcle.global.annotation.ExcelExport;
 import com.showcle.global.exception.ExcelDownloadException;
 import com.showcle.global.model.ExcelModel;
+import com.showcle.global.util.CommonUtil;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +13,10 @@ import org.apache.poi.xssf.streaming.SXSSFCell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.UriUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
@@ -23,9 +25,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-@Component
+@Service
 @Slf4j
-public class ExcelDownloadHelper {
+public class ExcelDownloadService {
 
     public <T> void export(HttpServletResponse response, List<T> list) {
 
