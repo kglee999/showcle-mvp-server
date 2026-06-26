@@ -1,8 +1,6 @@
 package com.showcle.api.auth.controller;
 
-import com.showcle.api.auth.dto.CodeRequest;
-import com.showcle.api.auth.dto.EmailRequest;
-import com.showcle.api.auth.dto.Member;
+import com.showcle.api.auth.dto.*;
 import com.showcle.api.auth.service.MemberService;
 import com.showcle.global.controller.CommonController;
 import com.showcle.global.model.JsonResponse;
@@ -13,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -22,16 +21,12 @@ public class MemberController extends CommonController {
 
     private final MemberService memberService;
 
-    // 로그인
-
-
-
     // 회원 가입
     @PostMapping(value = "/member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<JsonResponse<Object>> saveMember(@Validated Member member, Errors errors) {
+    public ResponseEntity<JsonResponse<Object>> saveMember(@Validated MemberRequest param, Errors errors) {
         checkValidation(errors);
 
-        memberService.saveMember(member);
+        memberService.saveMember(param);
         return ResponseEntity.ok(new JsonResponse<>(null));
     }
 
@@ -47,21 +42,34 @@ public class MemberController extends CommonController {
     public ResponseEntity<JsonResponse<Object>> sendEmail(@Validated @RequestBody EmailRequest body, Errors errors) {
         checkValidation(errors);
 
-        memberService.sendEmailCode(body.getEmail());
+        memberService.sendEmailCode(body.email());
         return ResponseEntity.ok(new JsonResponse<>(null));
     }
 
     // 이메일 인증번호 인증
     @PostMapping("/email/code/verify")
-    public ResponseEntity<JsonResponse<Object>> verifyEmail(@Validated @RequestBody CodeRequest body, Errors errors) {
+    public ResponseEntity<JsonResponse<Object>> verifyEmail(@Validated @RequestBody EmailVerifyRequest body, Errors errors) {
         checkValidation(errors);
 
-        memberService.verifyEmail(body.getEmail(), body.getCode());
+        memberService.verifyEmail(body.email(), body.code());
         return ResponseEntity.ok(new JsonResponse<>(null));
     }
 
     // 이메일 찾기
+    @PostMapping("/email/find")
+    public ResponseEntity<JsonResponse<Object>> findEmail(@Validated @RequestBody EmailFindRequest body, Errors errors) {
+        checkValidation(errors);
 
+        List<Member.EmailFindResponse> result = memberService.findEmail(body);
+        return ResponseEntity.ok(new JsonResponse<>(result));
+    }
 
     // 비밀번호 찾기
+    @PostMapping("/passwd/find")
+    public ResponseEntity<JsonResponse<Object>> findPasswd(@Validated @RequestBody PasswdFindRequest body, Errors errors) {
+        checkValidation(errors);
+
+        memberService.findPasswd(body);
+        return ResponseEntity.ok(new JsonResponse<>(null));
+    }
 }

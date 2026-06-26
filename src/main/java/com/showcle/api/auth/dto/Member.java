@@ -1,12 +1,10 @@
 package com.showcle.api.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
+import com.showcle.global.util.CommonUtil;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -16,20 +14,13 @@ import java.time.LocalDateTime;
 public class Member {
 
     private long idx;
-    @NotEmpty
-    @Email
     private String email;
-    @NotEmpty
     private String passwd;
-    @NotEmpty
     private String name;
-    @NotEmpty
     private String countryCode;
-    @NotEmpty
     private String phone;
     private String device;
     private String pushToken;
-    private MultipartFile profileImgFile;
     private long profileImg;
 
     private int pushYn;
@@ -42,4 +33,12 @@ public class Member {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updatedAt;
     private String updatedBy;
+
+    // 이메일 찾기 결과
+    public record EmailFindResponse(String email, String createdDate) {
+        public EmailFindResponse {
+            // email - 마스킹 처리
+            email = CommonUtil.emailMasking(email);
+        }
+    }
 }

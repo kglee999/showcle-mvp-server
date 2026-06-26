@@ -1,5 +1,6 @@
 package com.showcle.global.service;
 
+import com.showcle.global.constants.Constant;
 import com.showcle.global.enums.FileType;
 import com.showcle.global.exception.BusinessException;
 import com.showcle.global.interfaces.FileUploader;
@@ -11,16 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.BufferedOutputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
-
 import static com.showcle.global.enums.ErrorCode.*;
 
 @Service
@@ -35,11 +33,6 @@ public class LocalFileUploadService implements FileUploader {
 
     private final FileMapper fileMapper;
 
-    // 실행 파일 및 특정 확장자는 업로드되지 않도록 처리
-    private static final String[] BAD_EXTENSION = { "jsp", "php", "asp", "html", "perl", "exe", "class", "js", "lnk", "pif", "msi", "vbs", "inf", "reg"};
-    // 디렉토리 생성 날짜 형식
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMdd");
-
     @Override
     public FileModel upload(FileType type, MultipartFile mpf) {
 
@@ -49,7 +42,7 @@ public class LocalFileUploadService implements FileUploader {
 
         try {
             LocalDateTime today = LocalDateTime.now();
-            String dateDir = today.format(DATE_FORMATTER);
+            String dateDir = today.format(Constant.DATE_FORMATTER1);
 
             Path saveDir = Paths.get(storagePath, type.getPath(), dateDir).toAbsolutePath().normalize();
             Path webDir = Paths.get(webPath, type.getPath(), dateDir).toAbsolutePath().normalize();
@@ -63,7 +56,7 @@ public class LocalFileUploadService implements FileUploader {
             String saveFileName = uuid + "." + ext;
 
             // 불량 확장자가 존재할때..
-            for (String badExt : BAD_EXTENSION) {
+            for (String badExt : Constant.BAD_EXTENSION) {
                 if (ext.equalsIgnoreCase(badExt)) {
                     throw new BusinessException(FILE_UPLOAD_BAD_EXTENSION);
                 }

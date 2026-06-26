@@ -1,34 +1,91 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
 <head>
-    <meta charset="utf-8">
+    <title>메일</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-<body style="margin:0px; background: #f8f8f8; ">
-<div width="100%" style="background: #f8f8f8; padding: 0px 0px; font-family:arial; line-height:28px; height:100%;  width: 100%; color: #514d6a;">
-    <div style="max-width: 700px; padding:50px 0;  margin: 0px auto; font-size: 14px">
-        <div style="padding: 40px; background: #fff;">
-            <table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
+<body style="margin: 0px; padding: 0px; background:#fff; ">
+<table align="center" style="width:100%; margin:0; font-family: 'Pretendard', dotum;" cellpadding="0" cellspacing="0">
+    <tbody>
+    <tr>
+        <td align="center">
+            <table align="center" style="background:#fff; width:100%; max-width:550px; padding:50px 30px 10px 30px; margin:0; font-family: 'Pretendard', dotum;" cellpadding="0" cellspacing="0">
                 <tbody>
                 <tr>
-                    <td style="border-bottom:1px solid #f6f6f6;">
-                        <h2 style="font-family:arial; margin:0px; font-weight:bold;">#{subject}</h2>
+                    <td>
+                        <a href="#none"><img src="https://s3.ap-northeast-2.amazonaws.com/resource.showcle.com/logo-svg.svg" alt="SHOWCLE" style="vertical-align:middle;"></a>
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding:10px 0 30px 0;">
-                        <p> 인증번호 : #{code}</p>
+                    <td height="10"></td>
+                </tr>
+                <tr>
+                    <td><strong style="font-size: 24px; font-family: 'Pretendard', dotum; font-weight: 700; line-height:1.71">메일 인증 안내입니다.</strong></td>
+                </tr>
+                <tr>
+                    <td height="30">
+                        <div style="width: 502px; height: 0px; border: 0.50px #D3D3D3 solid"></div>
                     </td>
                 </tr>
                 <tr>
-                    <td style="border-top:1px solid #f6f6f6; padding-top:20px; color:#777"></td>
+                    <td>
+                        <strong style="font-size: 14px; font-family: 'Pretendard', dotum; font-weight: 500; line-height:1.71" />
+                        안녕하세요. 쇼클을 이용해 주셔서 진심으로 감사합니다.<br>
+                        아래 인증코드를 확인하시고 쇼클 이메일 인증 페이지에 입력해 주세요.<br><br>
+
+                        <table align="center" style="background:#fff; width:100%; max-width:200px; padding:10px 0px 30px 0px; margin:0; font-family: 'Pretendard', dotum;" cellpadding="0" cellspacing="0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <div style="width: 44px; height: 44px; background: #F7F7F7; border-radius: 4px;">
+                                        <div style="padding:7px 0px 0px 15px; color: #0094FF; font-size: 28px; font-family: Pretendard; font-weight: 700; word-wrap: break-word;">#{showcle.num1}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="width: 44px; height: 44px; background: #F7F7F7; border-radius: 4px;">
+                                        <div style="padding:7px 0px 0px 15px; color: #0094FF; font-size: 28px; font-family: Pretendard; font-weight: 700; word-wrap: break-word;">#{showcle.num2}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="width: 44px; height: 44px; background: #F7F7F7; border-radius: 4px;">
+                                        <div style="padding:7px 0px 0px 15px; color: #0094FF; font-size: 28px; font-family: Pretendard; font-weight: 700; word-wrap: break-word;">#{showcle.num3}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="width: 44px; height: 44px; background: #F7F7F7; border-radius: 4px;">
+                                        <div style="padding:7px 0px 0px 15px; color: #0094FF; font-size: 28px; font-family: Pretendard; font-weight: 700; word-wrap: break-word;">#{showcle.num4}</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
                 </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
-</div>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <table align="center" style="background:#fff; width:100%; max-width:550px; padding:0; margin:0; font-family: 'Pretendard', dotum;" cellpadding="0" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td align="left" style="background:#EDEDED; padding:15px 35px;">
+                        <span style=" font-family: 'Pretendard', dotum; color:#525566; font-size: 12px; line-height: 1.7;">본 메일은 Showcle에서 [#{showcle.email}] 주소로 발송한 이메일입니다.<br>Copyright ⓒShowcle. All Rights Reserved.</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td height="20"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 
 </html>
+<!--// 여기까지 -->

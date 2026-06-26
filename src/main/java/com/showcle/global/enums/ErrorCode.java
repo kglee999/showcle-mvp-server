@@ -11,7 +11,9 @@ public enum ErrorCode {
     EMAIL_ALREADY_EXISTS("이메일이 이미 존재합니다."),
     FILE_UPLOAD_ERROR("파일 업로드 중 오류가 발생했습니다."),
     FILE_UPLOAD_BAD_EXTENSION("해당 업로드 파일은 업로드할 수 없는 파일입니다."),
-    EMAIL_SEND_ERROR("이메일 전송 중 오류가 발생했습니다.");
+    EMAIL_SEND_ERROR("이메일 전송 중 오류가 발생했습니다."),
+    MEMBER_NOT_MATCH("일치하는 정보가 없습니다."),
+    MEMBER_NOT_FOUND("등록된 정보가 없습니다.");
 
     private final String text;
 

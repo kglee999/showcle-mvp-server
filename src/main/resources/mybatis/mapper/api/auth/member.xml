@@ -7,7 +7,8 @@
 
     <!-- 이메일로 회원 조회 -->
     <select id="findByEmail" parameterType="String" resultType="com.showcle.api.auth.dto.Member">
-        select * from showcle_member
+        select *
+          from showcle_member
          where email = #{email} and discarded = 0
     </select>
 
@@ -43,7 +44,7 @@
     </select>
 
     <!-- 회원정보 저장 -->
-    <update id="insert" parameterType="com.showcle.api.auth.dto.Member">
+    <update id="insert" parameterType="com.showcle.api.auth.dto.MemberRequest">
         insert into showcle_member(
             email,
             passwd,
@@ -67,4 +68,20 @@
             #{createdBy}
         )
     </update>
+
+    <!-- 이름으로 회원정보 검색 -->
+    <select id="findMemberByName" parameterType="Map" resultType="com.showcle.api.auth.dto.Member">
+        select *
+          from showcle_member
+         where name = #{name} and discarded = 0
+    </select>
+
+    <!-- 이름, 이메일로 회원정보 검색 -->
+    <select id="findMemberByNameOrEmail" parameterType="Map" resultType="com.showcle.api.auth.dto.Member">
+        select *
+        from showcle_member
+        where (name = #{name} or email = #{email})
+          and discarded = 0
+    </select>
+
 </mapper>
