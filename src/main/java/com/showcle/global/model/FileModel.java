@@ -14,7 +14,7 @@ public class FileModel {
 
     private int idx;
     private int ownerIdx;
-    private FileType type;
+    private String type;
     private String fileType;
     private long fileSize;
     private String saveFileName;

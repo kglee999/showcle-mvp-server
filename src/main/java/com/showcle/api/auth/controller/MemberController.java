@@ -1,8 +1,8 @@
 package com.showcle.api.auth.controller;
 
-import com.showcle.api.auth.dto.Member;
 import com.showcle.api.auth.dto.CodeRequest;
 import com.showcle.api.auth.dto.EmailRequest;
+import com.showcle.api.auth.dto.Member;
 import com.showcle.api.auth.service.MemberService;
 import com.showcle.global.controller.CommonController;
 import com.showcle.global.model.JsonResponse;
@@ -22,9 +22,13 @@ public class MemberController extends CommonController {
 
     private final MemberService memberService;
 
+    // 로그인
+
+
+
     // 회원 가입
     @PostMapping(value = "/member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<JsonResponse<Object>> saveMember(@Validated @ModelAttribute Member member, Errors errors) {
+    public ResponseEntity<JsonResponse<Object>> saveMember(@Validated Member member, Errors errors) {
         checkValidation(errors);
 
         memberService.saveMember(member);
@@ -55,4 +59,9 @@ public class MemberController extends CommonController {
         memberService.verifyEmail(body.getEmail(), body.getCode());
         return ResponseEntity.ok(new JsonResponse<>(null));
     }
+
+    // 이메일 찾기
+
+
+    // 비밀번호 찾기
 }

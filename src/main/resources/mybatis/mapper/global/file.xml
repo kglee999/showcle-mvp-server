@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.showcle.global.mapper.FileMapper">
+    <!-- 파일 저장 -->
+    <insert id="insert" parameterType="com.showcle.global.model.FileModel" useGeneratedKeys="true" keyProperty="idx">
+        insert into showcle_file(
+            owner_idx,
+            type,
+            file_type,
+            file_size,
+            save_file_name,
+            real_file_name,
+            save_path,
+            web_path,
+            file_key,
+            discarded,
+            created_at,
+            created_by
+        )
+        values (
+            #{ownerIdx},
+            #{type},
+            #{fileType},
+            #{fileSize},
+            #{saveFileName},
+            #{realFileName},
+            #{savePath},
+            #{webPath},
+            #{fileKey},
+            #{discarded},
+            now(),
+            #{createdBy}
+        )
+    </insert>
+</mapper>

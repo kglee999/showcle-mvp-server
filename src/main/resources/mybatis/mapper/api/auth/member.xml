@@ -41,4 +41,30 @@
           from showcle_member_mail_auth
          where email = #{email} and auth_dt is not null
     </select>
+
+    <!-- 회원정보 저장 -->
+    <update id="insert" parameterType="com.showcle.api.auth.dto.Member">
+        insert into showcle_member(
+            email,
+            passwd,
+            name,
+            country_code,
+            phone,
+            profile_img,
+            last_login_dt,
+            created_at,
+            created_by
+        )
+        values (
+            #{email},
+            #{passwd},
+            #{name},
+            #{countryCode},
+            #{phone},
+            #{profileImg},
+            now(),
+            now(),
+            #{createdBy}
+        )
+    </update>
 </mapper>

@@ -3,8 +3,10 @@ package com.showcle.global.service;
 import com.showcle.global.enums.FileType;
 import com.showcle.global.exception.BusinessException;
 import com.showcle.global.interfaces.FileUploader;
+import com.showcle.global.mapper.FileMapper;
 import com.showcle.global.model.FileModel;
 import com.showcle.global.util.CommonUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,17 +21,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-import static com.showcle.global.enums.ErrorCode.FILE_UPLOAD_BAD_EXTENSION;
-import static com.showcle.global.enums.ErrorCode.FILE_UPLOAD_ERROR;
+import static com.showcle.global.enums.ErrorCode.*;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class LocalFileUploadService implements FileUploader {
 
     @Value("${server.file.storage-path}")
     private String storagePath;
     @Value("${server.file.web-path}")
     private String webPath;
+
+    private final FileMapper fileMapper;
 
     // 실행 파일 및 특정 확장자는 업로드되지 않도록 처리
     private static final String[] BAD_EXTENSION = { "jsp", "php", "asp", "html", "perl", "exe", "class", "js", "lnk", "pif", "msi", "vbs", "inf", "reg"};
@@ -81,7 +85,7 @@ public class LocalFileUploadService implements FileUploader {
 
             FileModel model = FileModel.builder()
                     .ownerIdx(0)
-                    .type(type)
+                    .type(type.name())
                     .fileType(contentType)
                     .fileSize(fileSize)
                     .saveFileName(saveFileName)
@@ -91,6 +95,11 @@ public class LocalFileUploadService implements FileUploader {
                     .fileKey(uuid)
                     .build();
 
+            int result = fileMapper.insert(model);
+
+            if(result <= 0) {
+                throw new BusinessException(SERVER_DB_UPDATE_ERROR);
+            }
             // FILE 테이블 저장
             return model;
 

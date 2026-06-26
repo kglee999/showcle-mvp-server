@@ -22,4 +22,7 @@ public interface MemberMapper {
 
     // 이메일 인증 완료 여부 확인
     int isEmailVerified(@Param("email") String email);
+
+    // 회원정보 저장
+    int insert(Member param);
 }
