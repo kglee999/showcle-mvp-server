@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class MemberAuth {
-    private int idx;
+    private long idx;
     private String email;
     private String code;
     private LocalDateTime sendDt;

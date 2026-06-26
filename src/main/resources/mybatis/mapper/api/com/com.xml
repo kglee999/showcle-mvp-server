@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.showcle.api.com.mapper.ComMapper">
+
+    <!-- 국가 코드 조회 -->
+    <select id="findCountryCodeList" resultType="com.showcle.api.com.dto.CountryCode">
+        select code
+             , name
+          from showcle_country_code
+         order by order_by
+    </select>
+</mapper>

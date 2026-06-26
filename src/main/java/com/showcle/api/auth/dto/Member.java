@@ -1,8 +1,8 @@
 package com.showcle.api.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,8 +15,9 @@ import java.time.LocalDateTime;
 @ToString
 public class Member {
 
-    private int idx;
+    private long idx;
     @NotEmpty
+    @Email
     private String email;
     @NotEmpty
     private String passwd;
@@ -29,7 +30,7 @@ public class Member {
     private String device;
     private String pushToken;
     private MultipartFile profileImgFile;
-    private int profileImg;
+    private long profileImg;
 
     private int pushYn;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

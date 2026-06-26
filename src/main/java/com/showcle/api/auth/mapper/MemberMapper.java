@@ -18,7 +18,7 @@ public interface MemberMapper {
     MemberAuth findLatestMemberMailCode(@Param("email") String email);
 
     // 인증 완료 업데이트
-    int updateMemberMailAuth(@Param("idx") int idx);
+    int updateMemberMailAuth(@Param("idx") long idx);
 
     // 이메일 인증 완료 여부 확인
     int isEmailVerified(@Param("email") String email);

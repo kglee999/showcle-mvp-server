@@ -19,7 +19,7 @@ import java.time.OffsetDateTime;
 public class Sample {
 
     @ExcelColumn(order = 1, title = "일련번호")
-    private int idx;
+    private long idx;
     @ExcelColumn(order = 2, title = "이름")
     @NotEmpty
     private String name;
