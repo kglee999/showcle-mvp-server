@@ -7,6 +7,7 @@ create table showcle_member
     email         varchar(100) not null,
     passwd        varchar(200) not null,
     name          varchar(20)  not null,
+    grade         smallint default 0,
     country_code  varchar(10)  not null,
     phone         varchar(20)  not null,
     device        varchar(1),
@@ -27,6 +28,7 @@ comment on column showcle_member.idx is '일련번호';
 comment on column showcle_member.email is '이메일';
 comment on column showcle_member.passwd is '비밀번호';
 comment on column showcle_member.name is '이름';
+comment on column showcle_member.grade is '등급';
 comment on column showcle_member.country_code is '국가 코드';
 comment on column showcle_member.phone is '전화번호';
 comment on column showcle_member.device is 'a: 안드로이드, i: ios, w: 웹 (?)';

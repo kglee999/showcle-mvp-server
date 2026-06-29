@@ -36,9 +36,7 @@ public class LocalFileUploadService implements FileUploader {
     @Override
     public FileModel upload(FileType type, MultipartFile mpf) {
 
-        if(type == null || mpf.isEmpty()) {
-            throw new BusinessException(FILE_UPLOAD_ERROR);
-        }
+        if(type == null || mpf.isEmpty()) return null;
 
         try {
             LocalDateTime today = LocalDateTime.now();

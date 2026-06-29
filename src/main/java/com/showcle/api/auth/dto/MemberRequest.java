@@ -20,6 +20,7 @@ public class MemberRequest {
     private String passwd;
     @NotEmpty
     private String name;
+    private int grade;
     @NotEmpty
     private String countryCode;
     @NotEmpty

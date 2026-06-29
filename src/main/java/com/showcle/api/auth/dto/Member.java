@@ -1,6 +1,7 @@
 package com.showcle.api.auth.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.showcle.global.util.CommonUtil;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,8 +16,10 @@ public class Member {
 
     private long idx;
     private String email;
+    @JsonIgnore
     private String passwd;
     private String name;
+    private int grade;
     private String countryCode;
     private String phone;
     private String device;

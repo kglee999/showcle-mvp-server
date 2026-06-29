@@ -47,6 +47,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<JsonResponse<Object>> handleException(Exception e) {
         log.error(CommonUtil.printException(e));
-        return new ResponseEntity<>( new JsonResponse<>(false, ServiceResult.FAIL.name(), e.getClass()), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>( new JsonResponse<>(false, ServiceResult.FAIL.name(), e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

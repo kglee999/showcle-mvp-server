@@ -6,6 +6,7 @@ import com.showcle.global.constants.Constant;
 import com.showcle.global.enums.ErrorCode;
 import com.showcle.global.enums.FileType;
 import com.showcle.global.enums.MailType;
+import com.showcle.global.enums.Role;
 import com.showcle.global.exception.BusinessException;
 import com.showcle.global.interfaces.FileUploader;
 import com.showcle.global.model.FileModel;
@@ -31,6 +32,12 @@ public class MemberService {
     private final MemberMapper memberMapper;
     private final FileUploader localFileUploadService;
     private final PasswordEncoder passwordEncoder;
+
+    // 사용자 조회
+    @Transactional(readOnly = true)
+    public Member findByEmail(String email) {
+        return memberMapper.findByEmail(email);
+    }
 
     // 이메일 중복 체크
     @Transactional(readOnly = true)
@@ -102,13 +109,17 @@ public class MemberService {
         }
 
         // 프로필 이미지 업로드
-        FileModel model = localFileUploadService.upload(FileType.MEMBER_PROFILE, param.getProfileImgFile());
-        // 이미지 파일 idx 저장
-        param.setProfileImg(model.getIdx());
+        if(param.getProfileImgFile() != null) {
+            FileModel model = localFileUploadService.upload(FileType.MEMBER_PROFILE, param.getProfileImgFile());
+            // 이미지 파일 idx 저장
+            param.setProfileImg(model.getIdx());
+        }
         // 패스워드 암호화
         param.setPasswd(passwordEncoder.encode(param.getPasswd()));
         // 전화번호 숫자빼고 삭제 후 저장
         param.setPhone(CommonUtil.removeNonNumber(param.getPhone()));
+        // 등급 저장
+        param.setGrade(Role.USER.getCode());
 
         // 회원정보 저장
         int result = memberMapper.insert(param);
@@ -162,5 +173,11 @@ public class MemberService {
         }
         // 패스워드 재설정 URL
         // 패스워드 메일 발송 ( 메일 포맷 확인 필요 )
+    }
+
+    // 최종 로그인 시간 업데이트
+    @Transactional
+    public int updateLastLoginDt(long idx) {
+        return memberMapper.updateLastLoginDt(idx);
     }
 }

@@ -35,4 +35,7 @@ public interface MemberMapper {
 
     // 이름, 이메일로 회원정보 검색
     List<Member> findMemberByNameOrEmail(@Param("email") String email, @Param("name") String name);
+
+    // 최종 로그인 시간 업데이트
+    int updateLastLoginDt(@Param("idx") long idx);
 }
