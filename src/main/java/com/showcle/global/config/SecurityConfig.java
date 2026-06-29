@@ -3,6 +3,9 @@ package com.showcle.global.config;
 import com.showcle.api.auth.service.MemberService;
 import com.showcle.global.config.security.*;
 import com.showcle.global.config.security.filter.RestAuthenticationFilter;
+import com.showcle.global.config.security.oauth2.CustomOAuth2FailureHandler;
+import com.showcle.global.config.security.oauth2.CustomOAuth2SuccessHandler;
+import com.showcle.global.config.security.oauth2.OAuth2UserService;
 import com.showcle.global.config.security.provider.CustomAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +30,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,6 +52,9 @@ public class SecurityConfig {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private OAuth2UserService oAuth2UserService;
 
     // 로그인 URL
     public static final String SECURITY_LOGIN_URL = "/api/member/v1/signin";
@@ -82,7 +87,9 @@ public class SecurityConfig {
                             "/api/v1/auth/email/code/send",
                             "/api/v1/auth/email/code/verify",
                             "/api/v1/auth/email/find",
-                            "/api/v1/auth/passwd/find"
+                            "/api/v1/auth/passwd/find",
+                            "/login/oauth2/code/*",
+                            "/api/test/**"
                     ).permitAll()
                     .anyRequest().authenticated())
             // 에러 핸들링
@@ -97,6 +104,12 @@ public class SecurityConfig {
             .headers(configurer -> configurer
                     .frameOptions(option -> option.sameOrigin()))
 
+            // OAUTH2 LOGIN
+            .oauth2Login(oauth2 -> oauth2
+                    .userInfoEndpoint(userInfo -> userInfo.userService(oAuth2UserService))
+                    .successHandler(customOAuth2SuccessHandler())
+                    .failureHandler(customOAuth2FailureHandler())
+            )
             .addFilterBefore(restAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
             .build();
     }
@@ -228,6 +241,18 @@ public class SecurityConfig {
     @Bean
     public HttpSessionSecurityContextRepository httpSessionSecurityContextRepository() {
         return new HttpSessionSecurityContextRepository();
+    }
+
+    // OAuth2 인증 성공 시 처리
+    @Bean
+    public CustomOAuth2SuccessHandler customOAuth2SuccessHandler() {
+        return new CustomOAuth2SuccessHandler();
+    }
+
+    // OAuth2 인증 실패 시 처리
+    @Bean
+    public CustomOAuth2FailureHandler customOAuth2FailureHandler() {
+        return new CustomOAuth2FailureHandler();
     }
 
     // 권한 없음 에러 처리

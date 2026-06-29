@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SNS 로그인 테스트</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 60px; }
+        h2 { margin-bottom: 40px; }
+        .section { width: 360px; margin-bottom: 40px; }
+        .section h3 { border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 16px; }
+        .btn { display: block; width: 100%; padding: 12px; margin-bottom: 12px; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; text-align: center; text-decoration: none; }
+        .btn-google  { background: #4285F4; color: #fff; }
+        .btn-kakao   { background: #FEE500; color: #3C1E1E; }
+        .btn-naver   { background: #03C75A; color: #fff; }
+        .btn-email   { background: #555; color: #fff; }
+        input { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .result { width: 360px; background: #f4f4f4; padding: 16px; border-radius: 6px; white-space: pre-wrap; font-size: 13px; min-height: 60px; }
+    </style>
+</head>
+<body>
+
+<h2>로그인 테스트</h2>
+
+<!-- 소셜 로그인 -->
+<div class="section">
+    <h3>SNS 로그인</h3>
+    <a class="btn btn-google" href="/oauth2/authorization/google">Google 로그인</a>
+    <a class="btn btn-kakao"  href="/oauth2/authorization/kakao">Kakao 로그인</a>
+    <a class="btn btn-naver"  href="/oauth2/authorization/naver">Naver 로그인</a>
+</div>
+
+<!-- 이메일 로그인 -->
+<div class="section">
+    <h3>이메일 로그인</h3>
+    <input type="email"    id="email"    placeholder="이메일" />
+    <input type="password" id="password" placeholder="비밀번호" />
+    <button class="btn btn-email" onclick="emailLogin()">로그인</button>
+</div>
+
+<!-- 응답 결과 -->
+<div class="section">
+    <h3>응답</h3>
+    <div class="result" id="result">-</div>
+</div>
+
+<script>
+    async function emailLogin() {
+        const email    = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const res = await fetch('/api/member/v1/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ email, password })
+            });
+            const data = await res.json();
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+            document.getElementById('result').textContent = e.message;
+        }
+    }
+</script>
+
+</body>
+</html>
